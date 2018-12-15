@@ -5,21 +5,20 @@ import tensorflow as tf
 import numpy as np
 
 from rllab.envs.normalized_env import normalize
-from rllab.envs.mujoco.gather.ant_gather_env import AntGatherEnv
-from rllab.envs.mujoco.swimmer_env import SwimmerEnv
+# from rllab.envs.mujoco.gather.ant_gather_env import AntGatherEnv
+# from rllab.envs.mujoco.swimmer_env import SwimmerEnv
 # from rllab.envs.mujoco.ant_env import AntEnv
-from rllab.envs.mujoco.humanoid_env import HumanoidEnv
+# from rllab.envs.mujoco.humanoid_env import HumanoidEnv
 from rllab.misc.instrument import VariantGenerator
 from rllab import config
 
 from sac.algos import SAC
-from sac.envs import (
-    GymEnv,
-    MultiDirectionSwimmerEnv,
-    MultiDirectionAntEnv,
-    MultiDirectionHumanoidEnv,
-    CrossMazeAntEnv,
-)
+from sac.envs import CassieEnv
+    # GymEnv,
+    # MultiDirectionSwimmerEnv,
+    # MultiDirectionAntEnv,
+    # MultiDirectionHumanoidEnv,
+    # CrossMazeAntEnv,
 
 from sac.misc.instrument import run_sac_experiment
 from sac.misc.utils import timestamp, unflatten
@@ -31,40 +30,44 @@ from sac.preprocessors import MLPPreprocessor
 from examples.variants import parse_domain_and_task, get_variants
 
 ENVIRONMENTS = {
-    'swimmer-gym': {
-        'default': lambda: GymEnv('Swimmer-v1'),
-    },
-    'swimmer-rllab': {
-        'default': SwimmerEnv,
-        'multi-direction': MultiDirectionSwimmerEnv,
-    },
-    'ant': {
-        'default': lambda: GymEnv('Ant-v1'),
-        'multi-direction': MultiDirectionAntEnv,
-        'cross-maze': CrossMazeAntEnv
-    },
-    'humanoid-gym': {
-        'default': lambda: GymEnv('Humanoid-v1')
-    },
-    'humanoid-rllab': {
-        'default': HumanoidEnv,
-        'multi-direction': MultiDirectionHumanoidEnv,
-    },
-    'hopper': {
-        'default': lambda: GymEnv('Hopper-v1')
-    },
-    'half-cheetah': {
-        'default': lambda: GymEnv('HalfCheetah-v1')
-    },
-    'walker': {
-        'default': lambda: GymEnv('Walker2d-v1')
-    },
-    'humanoid-standup-gym': {
-        'default': lambda: GymEnv('HumanoidStandup-v1')
+    # 'swimmer-gym': {
+    #     'default': lambda: GymEnv('Swimmer-v1'),
+    # },
+    # 'swimmer-rllab': {
+    #     'default': SwimmerEnv,
+    #     'multi-direction': MultiDirectionSwimmerEnv,
+    # },
+    # 'ant': {
+    #     'default': lambda: GymEnv('Ant-v1'),
+    #     'multi-direction': MultiDirectionAntEnv,
+    #     'cross-maze': CrossMazeAntEnv
+    # },
+    # 'humanoid-gym': {
+    #     'default': lambda: GymEnv('Humanoid-v1')
+    # },
+    # 'humanoid-rllab': {
+    #     'default': HumanoidEnv,
+    #     'multi-direction': MultiDirectionHumanoidEnv,
+    # },
+    # 'hopper': {
+    #     'default': lambda: GymEnv('Hopper-v1')
+    # },
+    # 'half-cheetah': {
+    #     'default': lambda: GymEnv('HalfCheetah-v1')
+    # },
+    # 'walker': {
+    #     'default': lambda: GymEnv('Walker2d-v1')
+    # },
+    # 'humanoid-standup-gym': {
+    #     'default': lambda: GymEnv('HumanoidStandup-v1')
+    # },
+
+    'cassie': {
+        'default': CassieEnv,
     }
 }
 
-DEFAULT_DOMAIN = DEFAULT_ENV = 'swimmer-rllab'
+DEFAULT_DOMAIN = DEFAULT_ENV = 'cassie'
 AVAILABLE_DOMAINS = set(ENVIRONMENTS.keys())
 AVAILABLE_TASKS = set(y for x in ENVIRONMENTS.values() for y in x.keys())
 
@@ -230,6 +233,7 @@ def main():
     args = parse_args()
 
     domain, task = args.domain, args.task
+    # import pdb; pdb.set_trace()
     if (not domain) or (not task):
         domain, task = parse_domain_and_task(args.env)
 

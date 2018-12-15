@@ -8,3 +8,4 @@ from .random_goal_ant_env import RandomGoalAntEnv
 from .cross_maze_ant_env import CrossMazeAntEnv
 from .hierarchy_proxy_env import HierarchyProxyEnv
 from .multigoal import MultiGoalEnv
+from .cassie_env import CassieEnv

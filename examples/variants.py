@@ -18,37 +18,14 @@ LSP_POLICY_PARAMS_BASE = {
 }
 
 LSP_POLICY_PARAMS = {
-    'swimmer-gym': { # 2 DoF
-        'preprocessing_hidden_sizes': (M, M, 4),
-        's_t_units': 2,
-    },
-    'swimmer-rllab': { # 2 DoF
-        'preprocessing_hidden_sizes': (M, M, 4),
-        's_t_units': 2,
-    },
-    'hopper': { # 3 DoF
-        'preprocessing_hidden_sizes': (M, M, 6),
-        's_t_units': 3,
-    },
-    'half-cheetah': { # 6 DoF
-        'preprocessing_hidden_sizes': (M, M, 12),
-        's_t_units': 6,
-    },
-    'walker': { # 6 DoF
-        'preprocessing_hidden_sizes': (M, M, 12),
-        's_t_units': 6,
-   },
-    'ant': { # 8 DoF
-        'preprocessing_hidden_sizes': (M, M, 16),
-        's_t_units': 8,
-    },
-    'humanoid-gym': { # 17 DoF
-        'preprocessing_hidden_sizes': (M, M, 34),
-        's_t_units': 17,
-    },
+   
     'humanoid-rllab': { # 21 DoF
         'preprocessing_hidden_sizes': (M, M, 42),
         's_t_units': 21,
+    },
+    'cassie' :{
+    'preprocessing_hidden_sizes': (M, M, 42),
+    's_t_units': 21
     }
 }
 
@@ -61,22 +38,12 @@ GMM_POLICY_PARAMS_BASE = {
 }
 
 GMM_POLICY_PARAMS = {
-    'swimmer-rllab': { # 2 DoF
-    },
-    'hopper': { # 3 DoF
-    },
-    'half-cheetah': { # 6 DoF
-    },
-    'walker': { # 6 DoF
-    },
-    'ant': { # 8 DoF
-    },
-    'humanoid-gym': { # 17 DoF
-    },
+   
     'humanoid-rllab': { # 21 DoF
     },
     'humanoid-standup-gym': { # 17 DoF
     },
+    'cassie' : {}
 }
 
 GAUSSIAN_POLICY_PARAMS_BASE = {
@@ -87,22 +54,12 @@ GAUSSIAN_POLICY_PARAMS_BASE = {
 }
 
 GAUSSIAN_POLICY_PARAMS = {
-    'swimmer-rllab': { # 2 DoF
-    },
-    'hopper': { # 3 DoF
-    },
-    'half-cheetah': { # 6 DoF
-    },
-    'walker': { # 6 DoF
-    },
-    'ant': { # 8 DoF
-    },
-    'humanoid-gym': { # 17 DoF
-    },
+    
     'humanoid-rllab': { # 21 DoF
     },
     'humanoid-standup-gym': { # 17 DoF
     },
+    'cassie': {}
 }
 
 POLICY_PARAMS = {
@@ -125,22 +82,12 @@ VALUE_FUNCTION_PARAMS = {
 }
 
 ENV_DOMAIN_PARAMS = {
-    'swimmer-rllab': { # 2 DoF
-    },
-    'hopper': { # 3 DoF
-    },
-    'half-cheetah': { # 6 DoF
-    },
-    'walker': { # 6 DoF
-    },
-    'ant': { # 8 DoF
-    },
-    'humanoid-gym': { # 17 DoF
-    },
+   
     'humanoid-rllab': { # 21 DoF
     },
     'humanoid-standup-gym': { # 17 DoF
     },
+    'cassie': {}
 }
 
 ENV_PARAMS = {
@@ -185,10 +132,13 @@ ENV_PARAMS = {
     },
     'humanoid-standup-gym': { # 17 DoF
     },
+    'cassie': {
+        'task': ['running', 'fix-vel'],
+    }
 }
 
 ALGORITHM_PARAMS_BASE = {
-    'lr': 3e-4,
+    'lr': [3e-4, 0.2],
     'discount': 0.99,
     'target_update_interval': 1,
     'tau': 0.005,
@@ -255,6 +205,12 @@ ALGORITHM_PARAMS = {
             'n_epochs': 1e4,
         }
     },
+    'cassie': {
+    'scale_reward': 10,
+    'base_kwargs': {
+    'n_epochs': 1e4
+    }
+    }
 }
 
 REPLAY_BUFFER_PARAMS = {
@@ -264,38 +220,21 @@ REPLAY_BUFFER_PARAMS = {
 SAMPLER_PARAMS = {
     'max_path_length': 1000,
     'min_pool_size': 1000,
-    'batch_size': 256,
+    'batch_size': [256, 512],
 }
 
 RUN_PARAMS_BASE = {
-    'seed': [1,2,3,4,5],
+    'seed': [1,2],
     'snapshot_mode': 'gap',
     'snapshot_gap': 1000,
     'sync_pkl': True,
 }
 
 RUN_PARAMS = {
-    'swimmer-rllab': { # 2 DoF
-        'snapshot_gap': 200
-    },
-    'hopper': { # 3 DoF
-        'snapshot_gap': 600
-    },
-    'half-cheetah': { # 6 DoF
-        'snapshot_gap': 2000
-    },
-    'walker': { # 6 DoF
-        'snapshot_gap': 1000
-    },
-    'ant': { # 8 DoF
-        'snapshot_gap': 2000
-    },
-    'humanoid-gym': { # 21 DoF
-        'snapshot_gap': 4000
-    },
-    'humanoid-rllab': { # 21 DoF
-        'snapshot_gap': 4000
-    },
+    
+    'cassie': {
+    'snapshot_gap': 2000
+    }
 }
 
 
@@ -308,6 +247,7 @@ DOMAINS = [
     'humanoid-gym', # 17 DoF # gym_humanoid
     'humanoid-rllab', # 21 DoF
     'humanoid-standup-gym', # 17 DoF # gym_humanoid
+    'cassie'
 ]
 
 TASKS = {
@@ -340,6 +280,9 @@ TASKS = {
     'humanoid-standup-gym': [
         'default',
     ],
+    'cassie': [
+    'default'
+    ]
 }
 
 def parse_domain_and_task(env_name):
